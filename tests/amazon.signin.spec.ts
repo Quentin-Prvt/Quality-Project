@@ -21,6 +21,5 @@ test.describe('Amazon Sign in', () => {
         await expect(passwordField).toHaveValue('stordeurvousarrachesurvalo');
         // appuyer sur s'identifier pour se connecter
         await page.click('id=signInSubmit');
-
     });
 });
