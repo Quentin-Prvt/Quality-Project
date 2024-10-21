@@ -46,7 +46,7 @@ test('removeItemFromCart', async ({ page }) => {
 
     //SECOND STEP : REMOVE THE ITEM FROM THE CART
     await page.goto('https://www.amazon.fr/gp/cart/view.html');
-    acceptCookies(page); //synthetic function used many times
+    acceptCookies(page); //synthetic function used many times //might be useful on load of a page
     const cartCount = await page.$eval('#nav-cart-count', el => el.textContent || '0');
     if (parseInt(cartCount) > 0) {
         await page.click('.sc-action-delete input');
@@ -64,4 +64,26 @@ test('searchForItem', async ({ page }) => {
     await page.waitForSelector('.s-main-slot');
     const searchResults = await page.$$('.s-main-slot .s-result-item');
     expect(searchResults.length).toBeGreaterThan(0);
+});
+
+test('modifyAmmount', async ({ page }) => {
+    await page.goto('https://www.amazon.fr/');
+    acceptCookies(page); //function used many times
+    await page.fill('#twotabsearchtextbox', 'laptop');
+    await page.click('input#nav-search-submit-button');
+    await page.waitForSelector('.s-main-slot');
+    const firstItem = await page.$('.s-main-slot .s-result-item');
+    if (firstItem) {
+        await firstItem.click();
+        await page.waitForSelector('#add-to-cart-button');
+        await page.click('#add-to-cart-button');
+    }
+
+    acceptCookies(page); //function used many times
+    // Check if the item is in the cart //nav-cart-count
+    await page.evaluate(() => window.scrollTo(0, 0)); // Scrolls to the top of the page (just in case)
+    await page.waitForSelector('#nav-cart-count');
+    const cartCount = await page.$eval('#nav-cart-count', el => el.textContent);
+    const parsedCartCount = parseInt(cartCount || '0'); //cartCount if exist, else 0
+    expect(parsedCartCount).toBeGreaterThan(0);
 });
