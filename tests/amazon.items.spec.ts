@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-  test('addItemToCart', async ({ page }) => {
+
+test('addItemToCart', async ({ page }) => {
     await page.goto('https://www.amazon.fr/');
-    await page.click('#sp-cc-accept');
+    await page.click('#sp-cc-accept'); //this accepts cookies
     await page.fill('input[name="field-keywords"]', 'laptop');
     await page.click('input#nav-search-submit-button');
     await page.waitForSelector('.s-main-slot');
@@ -16,13 +17,14 @@ import { test, expect } from '@playwright/test';
     // Check if the item is in the cart //nav-cart-count
     await page.waitForSelector('#nav-cart-count');
     const cartCount = await page.$eval('#nav-cart-count', el => el.textContent);
-    cartCount = parseInt(cartCount);
-    expect(parseInt(cartCount)).toBeGreaterThan(0);
-  });
+    const parsedCartCount = parseInt(cartCount || '0'); //cartCount if exist, else 0
+    expect(parsedCartCount).toBeGreaterThan(0);
+});
   
-  test('removeItemFromCart', async ({ page }) => {
+test('removeItemFromCart', async ({ page }) => {
     await page.goto('https://www.amazon.fr/gp/cart/view.html');
-    // Check if the cart is not empty
+    await page.click('#sp-cc-accept'); //this accepts cookies
+    // Check if the cart is not empty // /!\ IMPORTANT
     const cartCount = await page.$eval('#nav-cart-count', el => el.textContent);
     if (parseInt(cartCount) > 0) {
       await page.click('.sc-action-delete input');
@@ -30,9 +32,9 @@ import { test, expect } from '@playwright/test';
       const emptyCartMessage = await page.$('.sc-your-amazon-cart-is-empty');
       expect(emptyCartMessage).not.toBeNull();
     }
-  });
+});
   
-  test('searchForItem', async ({ page }) => {
+test('searchForItem', async ({ page }) => {
     await page.goto('https://www.amazon.fr/');
     await page.click('#sp-cc-accept');
     await page.fill('input[name="field-keywords"]', 'smartphone');
@@ -40,4 +42,4 @@ import { test, expect } from '@playwright/test';
     await page.waitForSelector('.s-main-slot');
     const searchResults = await page.$$('.s-main-slot .s-result-item');
     expect(searchResults.length).toBeGreaterThan(0);
-  });
+});
