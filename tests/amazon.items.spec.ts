@@ -1,8 +1,4 @@
 import { test, expect, Page } from '@playwright/test';
-import { chromium } from 'playwright-extra';
-import stealth from 'puppeteer-extra-plugin-stealth';
-// Add the plugin to playwright (any number of plugins can be added)
-chromium.use(stealth())
 
 async function acceptCookies(page:Page) {
     try {
@@ -13,10 +9,9 @@ async function acceptCookies(page:Page) {
 }
 
 test('addItemToCart', async ({ page }) => {
-
     await page.goto('https://www.amazon.fr/');
     acceptCookies(page); //function used many times
-    await page.fill('input[name="field-keywords"]', 'laptop');
+    await page.fill('#twotabsearchtextbox', 'laptop');
     await page.click('input#nav-search-submit-button');
     await page.waitForSelector('.s-main-slot');
     const firstItem = await page.$('.s-main-slot .s-result-item');
