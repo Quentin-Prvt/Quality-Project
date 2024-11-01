@@ -7,7 +7,7 @@ test.describe('Product Details Verification', () => {
 
     test.beforeEach(async ({ page }) => {
         // Go to the Amazon homepage and accept cookies
-        await page.goto('https://www.amazon.fr/');
+        await page.goto('/');
         await acceptCookies(page);
 
         // Initialize the ProductPage POM
