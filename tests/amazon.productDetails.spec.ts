@@ -22,32 +22,29 @@ test.describe('Product Details Verification', () => {
     });
 
     test('Verify Product Title', async ({ page }) => {
-        // Check the product title
         const productTitle = await page.$eval('#productTitle', el => el.textContent?.trim());
-        expect(productTitle?.length).toBeGreaterThan(0); // Verify that the product title is not empty
+        expect(productTitle?.length).toBeGreaterThan(0);
         console.log('Product Title:', productTitle);
     });
 
     test('Verify Product Price', async ({ page }) => {
-        // Check for the presence of the price
         const productPriceElement = await page.$('.a-price-whole');
         if (productPriceElement) {
             const priceText = await productPriceElement.textContent();
             console.log('Product Price:', priceText);
-            expect(priceText?.length).toBeGreaterThan(0); // Verify that the price is displayed
+            expect(priceText?.length).toBeGreaterThan(0);
         } else {
             console.log('Price not available for this product.');
         }
     });
 
     test('Verify Product Review Count', async ({ page }) => {
-        // Check for the presence of the review count
         const reviewCountElement = await page.$('#acrCustomerReviewText');
         if (reviewCountElement) {
             const reviewCountText = await reviewCountElement.textContent();
-            const reviewCount = parseInt(reviewCountText?.replace(/\D/g, '') || '0', 10); // Extract the number
+            const reviewCount = parseInt(reviewCountText?.replace(/\D/g, '') || '0', 10);
             console.log('Review Count:', reviewCount);
-            expect(reviewCount).toBeGreaterThanOrEqual(0); // Verify that the element is present
+            expect(reviewCount).toBeGreaterThanOrEqual(0);
         } else {
             console.log('No reviews for this product.');
         }
