@@ -47,23 +47,24 @@ To execute all tests and view the results in the Playwright UI, use:
 npx playwright test --ui
 ```
 
-Viewing Test Results
-
-After the tests complete, a summary will display in the terminal. Detailed results, including screenshots and videos, are available in the results/ directory.
-
 # ✅ Test Scenarios
 
 The project includes the following 10 test scenarios for Amazon:
 
-- Home Page Load: Verifies that the homepage loads correctly with no missing elements.
-- Search Functionality: Ensures that searching for a product returns relevant results.
-- Filter Results: Applies filters (e.g., price range, brand) on search results and verifies they are correctly applied.
-- Product Page Details: Confirms that product details (title, price, description) are displayed accurately on the product page.
-- Add to Cart: Tests adding a product to the cart and checks if it appears in the cart with correct details.
-- Remove from Cart: Verifies that removing a product from the cart updates the cart contents as expected.
-- Checkout Process: Simulates proceeding through the checkout steps and ensures each step functions correctly.
-- Login Functionality: Tests the login process with valid and invalid credentials to confirm correct access and error handling.
-- Wishlist Addition: Adds a product to the wishlist and verifies it appears there.
-- Logout Functionality: Ensures that logging out works and the user is redirected to the appropriate page.
-
-Temporary test list, subject to change
+Search Functionality: Tests the search function to ensure that searching for a product by keyword or category returns relevant results. It verifies that:
+	•	Keyword search displays products matching the entered term.
+	•	Category search navigates through categories and shows products under the selected category.
+Product Page Details: Confirms that product details are displayed accurately on the product page, including:
+	•	Title: Ensures the product title is displayed and not empty.
+	•	Price: Checks that the product price is visible and correctly formatted.
+	•	Description: Verifies that the product description is shown and contains relevant information.
+	•	Review Count: Confirms that the review count is displayed and is a valid number (zero or more).
+Add to Cart: Tests adding a product to the cart, verifying that:
+	•	The item appears in the cart with the correct quantity and details after adding.
+	•	Cart updates reflect the addition accurately.
+Remove from Cart: Verifies that removing a product from the cart updates the cart contents as expected by:
+	•	Adding a product to the cart first, then removing it.
+	•	Confirming the item is no longer in the cart after removal.
+Modify Quantity in Cart: Tests changing the quantity of a product in the cart by:
+	•	Adding an item to the cart, updating the quantity, and ensuring the quantity change is reflected correctly.
+Login Functionality (future implementation): Tests the login process with valid and invalid credentials to confirm access is handled appropriately, showing error messages for invalid credentials.
