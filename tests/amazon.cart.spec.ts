@@ -1,18 +1,9 @@
 import { test, expect, Page } from '@playwright/test';
 import {acceptCookies} from '../Components/acceptCookies'
 
-test.describe('Item Manipulations', () => {
-    test('searchForItem', async ({ page }) => {
-        await page.goto('https://www.amazon.fr/');
-        acceptCookies(page); // Use the acceptCookies function
-        await page.fill('input[name="field-keywords"]', 'smartphone');
-        await page.click('input#nav-search-submit-button');
-        await page.waitForSelector('.s-main-slot');
-        const searchResults = await page.$$('.s-main-slot .s-result-item');
-        expect(searchResults.length).toBeGreaterThan(0);
-    });
+test.describe('Cart Manipulations', () => {
 
-    test('addItemToCart', async ({ page }) => {
+    test('Add Item to Cart', async ({ page }) => {
         await page.goto('https://www.amazon.fr/');
         acceptCookies(page); //function used many times
         await page.fill('#twotabsearchtextbox', 'logitech g pro x');
@@ -34,7 +25,7 @@ test.describe('Item Manipulations', () => {
         expect(parsedCartCount).toBeGreaterThan(0);
     });
     
-    test('removeItemFromCart', async ({ page }) => {
+    test('Remove Item from Cart', async ({ page }) => {
         //FIRST STEP : ADD SOMETHING TO THE CART (what we do in addItemToCart)
         await page.goto('https://www.amazon.fr/');
         acceptCookies(page); //synthetic function used many times
@@ -60,7 +51,7 @@ test.describe('Item Manipulations', () => {
         }
     });
 
-    test('modifyAmmount', async ({ page }) => {
+    test('Modify Item Quantity', async ({ page }) => {
         await page.goto('https://www.amazon.fr/');
         acceptCookies(page); //function used many times
         await page.fill('#twotabsearchtextbox', 'logitech g pro x');
