@@ -1,52 +1,51 @@
 import { test, expect } from '@playwright/test';
 import { acceptCookies } from '../Components/acceptCookies';
+import { ProductPage } from '../Components/ProductPage';
 
 test.describe('Product Details Verification', () => {
+    let productPage: ProductPage;
+
     test.beforeEach(async ({ page }) => {
         // Go to the homepage and accept cookies
         await page.goto('https://www.amazon.fr/');
         await acceptCookies(page);
 
-        // Search for a product (e.g., "logitech g pro x") and click on the first result
-        await page.fill('input[name="field-keywords"]', 'logitech g pro x');
-        await page.click('input#nav-search-submit-button');
-        await page.waitForSelector('.s-main-slot');
+        // Initialize the ProductPage POM
+        productPage = new ProductPage(page);
 
-        const firstItem = await page.$('.s-main-slot .s-result-item');
-        if (!firstItem) {
-            throw new Error('No product found');
-        }
-
-        await firstItem.click();
-        await page.waitForSelector('#productTitle'); // Wait for the product page to load
+        // Navigate to the specific product
+        await productPage.navigateToProduct('pc portable hp');
     });
 
-    test('Verify Product Title', async ({ page }) => {
-        const productTitle = await page.$eval('#productTitle', el => el.textContent?.trim());
+    test('Verify Product Title', async () => {
+        const productTitle = await productPage.getProductTitle();
         expect(productTitle?.length).toBeGreaterThan(0);
         console.log('Product Title:', productTitle);
     });
 
-    test('Verify Product Price', async ({ page }) => {
-        const productPriceElement = await page.$('.a-price-whole');
-        if (productPriceElement) {
-            const priceText = await productPriceElement.textContent();
-            console.log('Product Price:', priceText);
-            expect(priceText?.length).toBeGreaterThan(0);
+    test('Verify Product Price', async () => {
+        const productPrice = await productPage.getProductPrice();
+        if (productPrice) {
+            console.log('Product Price:', productPrice);
+            expect(productPrice.length).toBeGreaterThan(0);
         } else {
             console.log('Price not available for this product.');
         }
     });
 
-    test('Verify Product Review Count', async ({ page }) => {
-        const reviewCountElement = await page.$('#acrCustomerReviewText');
-        if (reviewCountElement) {
-            const reviewCountText = await reviewCountElement.textContent();
-            const reviewCount = parseInt(reviewCountText?.replace(/\D/g, '') || '0', 10);
-            console.log('Review Count:', reviewCount);
-            expect(reviewCount).toBeGreaterThanOrEqual(0);
+    test('Verify Product Review Count', async () => {
+        const reviewCount = await productPage.getReviewCount();
+        console.log('Review Count:', reviewCount);
+        expect(reviewCount).toBeGreaterThanOrEqual(0);
+    });
+
+    test('Verify Product Description', async () => {
+        const productDescription = await productPage.getProductDescription();
+        if (productDescription) {
+            console.log('Product Description:', productDescription);
+            expect(productDescription.length).toBeGreaterThan(0); // Check if description is not empty
         } else {
-            console.log('No reviews for this product.');
+            console.log('Description not available for this product.');
         }
     });
 });
