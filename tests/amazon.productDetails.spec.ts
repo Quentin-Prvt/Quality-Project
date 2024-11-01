@@ -6,7 +6,7 @@ test.describe('Product Details Verification', () => {
     let productPage: ProductPage;
 
     test.beforeEach(async ({ page }) => {
-        // Go to the homepage and accept cookies
+        // Go to the Amazon homepage and accept cookies
         await page.goto('https://www.amazon.fr/');
         await acceptCookies(page);
 
@@ -18,12 +18,14 @@ test.describe('Product Details Verification', () => {
     });
 
     test('Verify Product Title', async () => {
+        // Retrieve the product title and check if it is not empty
         const productTitle = await productPage.getProductTitle();
         expect(productTitle?.length).toBeGreaterThan(0);
         console.log('Product Title:', productTitle);
     });
 
     test('Verify Product Price', async () => {
+        // Retrieve the product price and check if it is not empty
         const productPrice = await productPage.getProductPrice();
         if (productPrice) {
             console.log('Product Price:', productPrice);
@@ -34,12 +36,14 @@ test.describe('Product Details Verification', () => {
     });
 
     test('Verify Product Review Count', async () => {
+        // Retrieve the review count and check if it is zero or more
         const reviewCount = await productPage.getReviewCount();
         console.log('Review Count:', reviewCount);
         expect(reviewCount).toBeGreaterThanOrEqual(0);
     });
 
     test('Verify Product Description', async () => {
+        // Retrieve the product description and check if it is not empty
         const productDescription = await productPage.getProductDescription();
         if (productDescription) {
             console.log('Product Description:', productDescription);
