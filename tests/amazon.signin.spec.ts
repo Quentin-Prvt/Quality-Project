@@ -15,7 +15,7 @@ test.describe('Amazon Sign in', () => {
 
         await page.click('#nav-link-accountList');  // Sélectionne le lien "Compte"
 
-        // Utilise les méthodes de la page de connexion
+        // Use POM from signInPage.ts
         await signInPage.enterEmail('damien.loubre@gmail.com');
         await signInPage.clickContinue();
         await signInPage.enterPassword('stordeurvousarrachesurvalo');

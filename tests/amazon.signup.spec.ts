@@ -1,50 +1,63 @@
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker'
-import {acceptCookies} from "../Components/acceptCookies";
+import { faker } from '@faker-js/faker';
+import { acceptCookies } from "../Components/acceptCookies";
 
 test.describe('Amazon Sign up', () => {
+    // This function runs before each test, navigating to the Amazon homepage and accepting cookies.
     test.beforeEach(async ({ page }) => {
-        // Navigate to the registration page
         await page.goto('http://amazon.fr/');
         await acceptCookies(page);
     });
 
-    test('sign up', async ({ page }) => {
+    test('sign up with retry on email conflict', async ({ page }) => {
+        // Click on "Hello, Sign in" and then "Create your Amazon account" to reach the sign-up page.
         await page.getByRole('link', { name: 'Bonjour, Identifiez-vous' }).click();
         await page.getByRole('link', { name: 'Créer votre compte Amazon' }).click();
 
-        // Use Faker to generate a random full name
+        // Generate a random full name and fill in the name field, then verify its value.
         const fullName = faker.person.fullName();
-        // Fill in the full name
         const nameField = page.locator('#ap_customer_name');
         await nameField.fill(fullName);
         await expect(nameField).toHaveValue(fullName);
 
-        // Use Faker to generate a random email or phone number
-        const email = faker.internet.email();
-        // Fill in the email
-        const emailField = page.locator('#ap_email');
-        await emailField.fill(email);
-        await expect(emailField).toHaveValue(email);
+        let email;
+        let emailIsUsed = true;
 
-        // Use Faker to generate a random password
-        const password = faker.internet.password({ length: 15 });
-        // Fill in the password
-        const passwordField = page.locator('#ap_password');
-        await passwordField.fill(password);
-        // Fill in the password confirmation
-        const passwordFieldCheck = page.locator('#ap_password_check');
-        await passwordFieldCheck.fill(password);
-        // Check that both password fields contain the same value
-        await expect(passwordField).toHaveValue(password);
-        await expect(passwordFieldCheck).toHaveValue(password);
+        // Loop to try different email addresses until an unused one is found.
+        while (emailIsUsed) {
+            // Generate a random email and fill in the email field, then verify its value.
+            email = faker.internet.email();
+            const emailField = page.locator('#ap_email');
+            await emailField.fill(email);
+            await expect(emailField).toHaveValue(email);
 
-        // Click continue to proceed
-        await page.getByLabel('Continuer Vérifier le numéro').click();
+            // Generate a new password each time and fill in both password fields.
+            const password = faker.internet.password({ length: 15 });
+            const passwordField = page.locator('#ap_password');
+            const passwordFieldCheck = page.locator('#ap_password_check');
 
-        // Complete the CAPTCHA puzzle for verification
-        await page.locator('iframe[title="verification puzzle"]').contentFrame().locator('iframe[title="Vérification de l\\\'authentification"]').contentFrame().locator('iframe[title="Verification challenge"]').contentFrame().locator('iframe[title="Défi visuel"]').contentFrame().getByRole('button', { name: 'Commencer l’énigme' }).click();
+            // Fill in the password fields with the new password and verify their values.
+            await passwordField.fill(password);
+            await passwordFieldCheck.fill(password);
+            await expect(passwordField).toHaveValue(password);
+            await expect(passwordFieldCheck).toHaveValue(password);
 
-        // End of test, cannot proceed further due to security reasons and to avoid automated account creation
+            // Click to verify the email address.
+            await page.getByLabel('Continuer Vérifier le numéro').click();
+
+            // Wait briefly to allow any error alert to load, if it exists.
+            await page.waitForTimeout(1000);
+
+            // Check if the email is already in use by looking for the specific alert text.
+            const emailUsedAlert = page.locator('.a-alert-content:has-text("Il existe déjà un compte associé à cette adresse e-mail")');
+            emailIsUsed = await emailUsedAlert.isVisible();
+
+            if (emailIsUsed) {
+                console.log(`The email address ${email} is already in use. Trying a new email and password...`);
+            } else {
+                console.log(`Email address ${email} accepted, registration can proceed.`);
+            }
+        }
+
     });
 });
