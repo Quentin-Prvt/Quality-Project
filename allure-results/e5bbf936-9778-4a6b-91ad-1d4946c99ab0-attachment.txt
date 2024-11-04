@@ -1,0 +1,44 @@
+An error occurred while trying to accept cookies: page.click: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('#sp-cc-accept')
+  -   locator resolved to <input value="all" tabindex="1" name="accept" type="submit" id="sp-cc-accept" class="a-button-input celwidget" data-csa-c-id="b03uab-exkql7-3dyhds-trx2ky"/>
+  - attempting click action
+  -   waiting for element to be visible, enabled and stable
+
+    at acceptCookies (C:\dev\quality_approch\Quality-Project\Components\acceptCookies.ts:8:24)
+    at C:\dev\quality_approch\Quality-Project\tests\amazon.productDetails.spec.ts:11:9 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@11',
+    location: {
+      file: 'C:\\dev\\quality_approch\\Quality-Project\\Components\\acceptCookies.ts',
+      line: 8,
+      column: 24,
+      function: 'acceptCookies'
+    },
+    category: 'pw:api',
+    title: 'page.click(#sp-cc-accept)',
+    apiName: 'page.click',
+    params: { selector: '#sp-cc-accept' },
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1730726411504,
+    error: {
+      message: 'Error: page.click: Test timeout of 30000ms exceeded.\n' +
+        'Call log:\n' +
+        "  \x1B[2m- waiting for locator('#sp-cc-accept')\x1B[22m\n" +
+        '\x1B[2m  -   locator resolved to <input value="all" tabindex="1" name="accept" type="submit" id="sp-cc-accept" class="a-button-input celwidget" data-csa-c-id="b03uab-exkql7-3dyhds-trx2ky"/>\x1B[22m\n' +
+        '\x1B[2m  - attempting click action\x1B[22m\n' +
+        '\x1B[2m  -   waiting for element to be visible, enabled and stable\x1B[22m\n',
+      stack: 'Error: page.click: Test timeout of 30000ms exceeded.\n' +
+        'Call log:\n' +
+        "  \x1B[2m- waiting for locator('#sp-cc-accept')\x1B[22m\n" +
+        '\x1B[2m  -   locator resolved to <input value="all" tabindex="1" name="accept" type="submit" id="sp-cc-accept" class="a-button-input celwidget" data-csa-c-id="b03uab-exkql7-3dyhds-trx2ky"/>\x1B[22m\n' +
+        '\x1B[2m  - attempting click action\x1B[22m\n' +
+        '\x1B[2m  -   waiting for element to be visible, enabled and stable\x1B[22m\n' +
+        '\n' +
+        '    at acceptCookies (C:\\dev\\quality_approch\\Quality-Project\\Components\\acceptCookies.ts:8:24)\n' +
+        '    at C:\\dev\\quality_approch\\Quality-Project\\tests\\amazon.productDetails.spec.ts:11:9'
+    }
+  }
+}

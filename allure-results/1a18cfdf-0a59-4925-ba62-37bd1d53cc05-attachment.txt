@@ -1,0 +1,2 @@
+Cookies accepted.
+Cookie acceptance button not found or already accepted.
