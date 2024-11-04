@@ -1,6 +1,8 @@
+STORDEUR Théo - DANEL Théo - DE POORTER Maxence - FORDELONE Marco - PRUVOT Quentin
+
 # Amazon Testing with Playwright
 
-This project is focused on performing a series of 10 automated tests on the Amazon website using Playwright. The goal is to verify the quality and robustness of Amazon’s user interface by simulating various user interactions and validating expected outcomes as part of a software development quality assurance process.
+This project is focused on performing a series of 13 automated tests on the Amazon website using Playwright. The goal is to verify the quality and robustness of Amazon’s user interface by simulating various user interactions and validating expected outcomes as part of a software development quality assurance process.
 
 # 📁 Project Structure
 
