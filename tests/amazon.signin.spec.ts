@@ -21,7 +21,7 @@ test.describe('Amazon Sign in', () => {
         await signInPage.enterPassword('stordeurvousarrachesurvalo');
         await signInPage.clickSignIn();
     });
-    test('sign in with bad password', async ({ page }) => {
+    test('sign in with wrong password', async ({ page }) => {
         await page.click('#nav-link-accountList');  // Select the "Account" link
         // Fill in the email
         const emailField = page.locator('#ap_email');

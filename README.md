@@ -7,6 +7,10 @@ This project is focused on performing a series of 10 automated tests on the Amaz
 - tests/: Contains all test scripts for the specified functionalities on Amazon.
 - playwright.config.ts: Configuration file for Playwright, where browser settings and test runner options are defined.
 
+# Gherkin 
+Google doc link : https://docs.google.com/document/d/1MuP5eP_QDthOQ7gEQG7cAMu3Usk6mqIY9twL-9KBi_A/edit?usp=sharing
+
+
 # 🛠️ Getting Started
 
 Prerequisites
@@ -38,7 +42,6 @@ npx playwright install
 ```
 
 
-
 Running Tests
 
 To execute all tests and view the results in the Playwright UI, use:
@@ -66,4 +69,13 @@ Cart Manipulation: Confirm that cart's function works.
 - Remove from Cart: The item is no longer in the cart after removal.
 - Modify Quantity in Cart: The item quantity change in the cart after modifying
 
-Login Functionality (future implementation): Tests the login process with valid and invalid credentials to confirm access is handled appropriately, showing error messages for invalid credentials.
+Login Functionality: Confirm that the login process works.
+- Sign in with good password: The user access to the captcha to validate his connection
+- Sign in with bad password: The user get an error 
+
+Register Functionality: Confirm that the register process works.
+- Register with good credentials (if email already used, it retry)
+
+Buy functionnality: Confirm that the buy function work
+- Buy an item until we need to login (no checkout)
+
