@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker'
+import {acceptCookies} from "../Components/acceptCookies";
 
 test.describe('Amazon Sign up', () => {
     test.beforeEach(async ({ page }) => {
         // Navigate to the registration page
         await page.goto('http://amazon.fr/');
-        await page.getByLabel('Accepter').click();
+        await acceptCookies(page);
     });
 
     test('sign up', async ({ page }) => {
