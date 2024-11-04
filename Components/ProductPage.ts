@@ -10,7 +10,7 @@ export class ProductPage {
 
     async navigateToProduct(productName: string) {
         // Search for a product by name and click the first result
-        await this.page.fill('input[name="field-keywords"]', productName);
+        await this.page.fill('#twotabsearchtextbox', productName);
         await this.page.click('input#nav-search-submit-button');
         await this.page.waitForSelector('.s-main-slot');
 
