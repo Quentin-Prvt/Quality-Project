@@ -1,4 +1,4 @@
-STORDEUR Théo - DANEL Théo - DE POORTER Maxence - FORDELONE Marco - PRUVOT Quentin
+© STORDEUR Théo - DANEL Théo - DE POORTER Maxence - FORDELONE Marco - PRUVOT Quentin ©
 
 # Amazon Testing with Playwright
 
